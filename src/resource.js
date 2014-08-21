@@ -3,6 +3,8 @@ var res = {
     CloseNormal_png : "res/CloseNormal.png",
     BackPng :"res/Back.png",
     StayPng : "res/stay.png",
+    FlappyPlist : "res/flappy_packer.plist",
+    FlappyPng : "res/flappy_packer.png",
     CloseSelected_png : "res/CloseSelected.png"
 
 };

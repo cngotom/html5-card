@@ -179,8 +179,8 @@ var HelloWorldLayer = cc.Layer.extend({
         var texture = cc.textureCache.addImage(res.StayPng);
         var row = 4
         var col = 4
-        var p_width= texture.width /col
-        var p_height = texture.height / row
+        var p_width= 60
+        var p_height =94
         var animation = cc.Animation.create();
         for(var i =0; i < row  ; ++i)
         {
@@ -196,15 +196,20 @@ var HelloWorldLayer = cc.Layer.extend({
 
 
 
-        this.cat = cc.Sprite.createWithSpriteFrame(texture,new cc.Rect(0,0,64,96));
+        this.cat = cc.Sprite.createWithSpriteFrame(texture,new cc.Rect(0,0,60,94));
         this.cat.attr({
           x:size.width/2,
           y:size.height/2,
-          anchorX:0.5,
-          anchorY:0.5,
         });
         this.addChild(this.cat,1000);
         this.cat.runAction(this._actionStand);
+
+        this.cat.runAction(
+           cc.spawn(
+                cc.rotateBy(1, 720),
+                cc.moveTo(1,  cc.p(280, 280))
+            )
+        );
         return true;
     }
 });
