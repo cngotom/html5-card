@@ -89,6 +89,10 @@ var TestNode = cc.DrawNode.extend({
 
     this.addChild(helloLabel);
 
+  },
+  draw:function(){
+    cc._drawingUtil.drawLine(new cc.Point(0,0),new cc.Point(500,500))
+    this._super();
   }
 
 });
@@ -123,7 +127,7 @@ var HelloWorldLayer = cc.Layer.extend({
         var menu = new cc.Menu(closeItem);
         menu.x = 0;
         menu.y = 0;
-        //this.addChild(menu, 1);
+        this.addChild(menu, 1);
 
 
         //this.addChild(node,180);
@@ -164,13 +168,43 @@ var HelloWorldLayer = cc.Layer.extend({
                 cc.tintTo(2.5,255,125,0)
             )
         );
-        cardNode.turn();
+        //cardNode.turn();
         cardNode.runAction(
            cc.spawn(
                 cc.rotateBy(1, 720),
                 cc.moveTo(1,  cc.p(480, 480))
             )
         );
+
+        var texture = cc.textureCache.addImage(res.StayPng);
+        var row = 4
+        var col = 4
+        var p_width= texture.width /col
+        var p_height = texture.height / row
+        var animation = cc.Animation.create();
+        for(var i =0; i < row  ; ++i)
+        {
+          for(var j=0;j<col;++j)
+          {
+            animation.addSpriteFrameWithTexture(texture, new cc.Rect(j*p_width,i*p_height,p_width,p_height));
+
+          }
+        }
+        animation.setDelayPerUnit(0.05);
+        animation.setRestoreOriginalFrame(true);
+        this._actionStand = cc.RepeatForever.create(cc.Animate.create(animation));
+
+
+
+        this.cat = cc.Sprite.createWithSpriteFrame(texture,new cc.Rect(0,0,64,96));
+        this.cat.attr({
+          x:size.width/2,
+          y:size.height/2,
+          anchorX:0.5,
+          anchorY:0.5,
+        });
+        this.addChild(this.cat,1000);
+        this.cat.runAction(this._actionStand);
         return true;
     }
 });
