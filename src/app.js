@@ -210,6 +210,37 @@ var HelloWorldLayer = cc.Layer.extend({
                 cc.moveTo(1,  cc.p(280, 280))
             )
         );
+        var that = this;
+         cc.eventManager.addListener({
+           event: cc.EventListener.MOUSE,         
+           onTouchesMoved: function(event) {
+            if(event.getButton() == cc.EventMouse.BUTTON_LEFT){
+               //event.getCurrentTarget().processEvent(event);
+               console.log("left click");
+               that.cat.x += event.getDeltaX();
+               that.cat.y += event.getDeltaY();
+            }
+           }   
+         },this);
+           cc.sys.capabilities.touches = true;
+         if (cc.sys.capabilities.hasOwnProperty('touches')){
+
+           alert("have touch");
+
+         }
+         else
+           alert("has no touch");
+
+         cc.eventManager.addListener({
+           event: cc.EventListener.TOUCH_ALL_AT_ONCE,         
+           onTouchesMoved: function(touch,event) {
+               //event.getCurrentTarget().processEvent(event);
+               
+               event = touch[0];
+               that.cat.x += event.getDelta().x;
+               that.cat.y += event.getDelta().y;
+           }   
+         },this);
         return true;
     }
 });
